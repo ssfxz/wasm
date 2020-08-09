@@ -14,6 +14,7 @@ npm install
 Build c to webassembly
 ```
 npm run wasm 
+```
 
 run the demo on browser
 ```
