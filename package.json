@@ -1,7 +1,7 @@
 {
-  "name": "NODE",
+  "name": "wasm",
   "version": "1.0.0",
-  "description": "NODE Client",
+  "description": "wasm demo",
   "main": "./build/bundle.js",
   "scripts": {
     "dev": "npm run start",
