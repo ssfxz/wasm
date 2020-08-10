@@ -6,7 +6,6 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.json', '.wasm', ".c", ".cpp"]
   },
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -26,7 +25,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Typescript Project',
       template: paths.appHtml,
       inject: false,
     }),

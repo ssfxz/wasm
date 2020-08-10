@@ -14,6 +14,7 @@ module.exports = merge(commonConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
   ],
+  devtool: 'source-map',
   devServer: {
     // 开启前端路径回路映射，子路径映射到根路径，由前端路由框架来解析
     historyApiFallback: true,

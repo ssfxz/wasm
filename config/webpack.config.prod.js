@@ -1,6 +1,6 @@
 const { merge } = require('webpack-merge');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const paths = require('./paths')
 const commonConfig = require('./webpack.config')
@@ -12,17 +12,14 @@ module.exports = merge(commonConfig, {
     path: paths.appBuild,
     filename: 'bundle.js',
   },
-  optimization: {
-    minimizer: [
-      // 压缩 js
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true
-      }),
-    ],
-  },
   plugins: [
-    new HtmlWebpackPlugin()
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: paths.appLib,
+          to: paths.appBuildLib
+        }
+      ]
+    })
   ],
 })
