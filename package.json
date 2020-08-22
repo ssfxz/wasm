@@ -14,7 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "@dp/bytecharts": "^1.2.1",
-    "lodash": "^4.17.20"
+    "kmeans": "0.0.1",
+    "lodash": "^4.17.20",
+    "ml-kmeans": "^5.0.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^6.0.3",

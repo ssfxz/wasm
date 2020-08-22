@@ -11,11 +11,11 @@ export const scatter = {
   axes: [
       {
           orient: 'left',
-          range: { min: 0, max: 1 },
+          range: { min: -1, max: 1 },
       },
       {
           orient: 'bottom',
-          range: { min: 0, max: 1 },
+          range: { min: -1, max: 1 },
       }
   ],
   legend: {

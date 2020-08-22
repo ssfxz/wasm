@@ -1,9 +1,10 @@
 import { chunk } from 'lodash'
+import kmeans from 'ml-kmeans'
 
 // @ts-ignore
 const Module = window.Module
 
-export function kmeans_wasm(datasource, k: number) {
+export function kmeans_wasm(datasource, k) {
     const VECTOR_LENGTH = 2;
     const data = datasource.flat()
     const length = datasource.length
@@ -29,5 +30,13 @@ export function kmeans_wasm(datasource, k: number) {
     Module._free(centersMem);
     Module._free(labelsMem);
 
+    return { centers, labels }
+}
+
+export function kmeans_js(datasource, k) {
+    const result = kmeans(datasource, k)
+    const { centroids, clusters } = result
+    const centers = centroids.map(d => d.centroid)
+    const labels = clusters
     return { centers, labels }
 }
