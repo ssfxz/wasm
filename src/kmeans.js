@@ -4,8 +4,11 @@ import kmeans from 'ml-kmeans'
 // @ts-ignore
 const Module = window.Module
 
+const VECTOR_LENGTH = 2;
+const MAX_ITER = 10
+const TOLERANCE = 0.0001
+
 export function kmeans_wasm(datasource, k) {
-    const VECTOR_LENGTH = 2;
     const data = datasource.flat()
     const length = datasource.length
 
@@ -34,7 +37,7 @@ export function kmeans_wasm(datasource, k) {
 }
 
 export function kmeans_js(datasource, k) {
-    const result = kmeans(datasource, k)
+    const result = kmeans(datasource, k, { maxIterations: MAX_ITER, tolerance: TOLERANCE })
     const { centroids, clusters } = result
     const centers = centroids.map(d => d.centroid)
     const labels = clusters

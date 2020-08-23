@@ -36,10 +36,10 @@ function renderWasmKmeans() {
     const { centers, labels } = result
 
     const timestamp_end = new Date().getTime()
-    console.log('K-Means with WASM:', timestamp_end - timestamp_start, 'ms')
-    const dom = document.getElementById("wasm-kmeans")
-    if(dom){
-        dom.innerHTML = `<h1>K-Means with WASM:<span>${timestamp_end - timestamp_start}</span>ms</h1>`;
+    console.log('K-Means with WASM: ', timestamp_end - timestamp_start, 'ms')
+    const dom = document.getElementById('wasm-kmeans')
+    if (dom) {
+        dom.innerHTML = `K-Means with WASM: <span>${timestamp_end - timestamp_start}</span> ms`;
     }
     const data = datasource.map((d, i) => ({ x: d[0], y: d[1], z: `${labels[i]}` }))
     const centerData = centers.map(d => ({ x: d[0], y:d[1], z: 'center'}))
@@ -66,10 +66,10 @@ function renderJsKmeans(){
     const { centers, labels } = result
 
     const timestamp_end = new Date().getTime()
-    console.log('K-Means with JS:', timestamp_end - timestamp_start, 'ms')
-    const dom = document.getElementById("js-kmeans")
-    if(dom){
-        dom.innerHTML = `<h1>K-Means with JS:<span>${timestamp_end - timestamp_start}</span>ms</h1>`;
+    console.log('K-Means with JS: ', timestamp_end - timestamp_start, 'ms')
+    const dom = document.getElementById('js-kmeans')
+    if (dom) {
+        dom.innerHTML = `K-Means with JS: <span>${timestamp_end - timestamp_start}</span> ms`;
     }
     const data = datasource.map((d, i) => ({ x: d[0], y: d[1], z: `${labels[i]}` }))
     const centerData = centers.map(d => ({ x: d[0], y:d[1], z: 'center'}))
@@ -88,7 +88,16 @@ function renderJsKmeans(){
     bytecharts.renderAsync()
 }
 
+function renderKValue() {
+    const dom = document.getElementById('k-value')
+    console.log('K = ', K)
+    if(dom) {
+        dom.innerHTML = `K =<span>${K}</span> `;
+    }
+}
+
 function start(){
+    renderKValue()
     renderWasmKmeans();
     renderJsKmeans();
 }
@@ -96,15 +105,30 @@ function start(){
 {
     start()
 
-    // 绑定事件
-    const inputDom = document.getElementById('k-input')
-    inputDom?.addEventListener('keyup', (e: any) => {
-       if(e.keyCode === 13){
-           const nextK = parseInt(e.target.value)
-           K = nextK
-           start()
-       }
-    })
+    const addDom = document.getElementById('btn-add')
+    if (addDom) {
+        addDom.onclick = () => {
+            if (K < 8) {
+                K += 1
+                start()
+            }
+        }
+    }
+    const subDom = document.getElementById('btn-sub')
+    if (subDom) {
+        subDom.onclick = () => {
+            if (K > 1) {
+                K -= 1
+                start()
+            }
+        }
+    }
+    const calcDom = document.getElementById('btn-calc')
+    if (calcDom) {
+        calcDom.onclick = () => {
+            start()
+        }
+    }
 }
 
 
@@ -123,7 +147,7 @@ function renderLR(type){
     const timestamp_end = new Date().getTime()
     const dom = document.getElementById(`${type}-lr-time`)
     if(dom){
-        dom.innerHTML = `<h1>LinearRegressor with ${type}:<span>${timestamp_end - timestamp_start}</span>ms</h1>`;
+        dom.innerHTML = `with ${type}:<span>${timestamp_end - timestamp_start}</span>ms`;
     }
     const a = result.a
     const b = result.b

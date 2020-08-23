@@ -5,6 +5,8 @@
     <style>
       .container {
         display: flex;
+        flex-wrap: wrap;
+        width: 1500px;
       }
       #wasm-kmeans span{
         color: #66cc1a;
@@ -12,20 +14,42 @@
       #js-kmeans span{
         color: #de0e0e;
       }
-
-      .result span{
-        font-size: larger;
+      .result {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 0 24px 0;
+        font-size: xx-large;
+        font-weight: bold;
+      }
+      .btn {
+        margin: 4px;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+      }
+      span {
+        margin: 0 12px;
+      }
+      #btn-calc {
+        width: 48px;
       }
     </style>
   </head>
   <body>
-    <div class="header">
-      K:<input id='k-input' placeholder="请输入K值"/>
-    </div>
     <div class="container">
       <div id="source"></div>
       <div id="wasm"></div>
       <div id="js"></div>
+      <div class="result">
+        <span id="k-value"></span>
+        <button class="btn" id="btn-add">+</button>
+        <button class="btn" id="btn-sub">-</button>
+        <button class="btn" id="btn-calc">GO</button>
+      </div>
+      <div class="result" id="wasm-kmeans"></div>
+      <div class="result" id="js-kmeans"></div>
     </div>
     <div class="result">
       <div id="wasm-kmeans"></div>
@@ -36,11 +60,12 @@
       <div id="source-lr"></div>
       <div id='wasm-lr'></div>
       <div id='js-lr'></div>
+      <div class="result">LinearRegressor</div>
+      <div class="result" id="wasm-lr-time"></div>
+      <div class="result" id="js-lr-time"></div>
     </div>
-    <div class="result">
-      <div id="wasm-lr-time"></div>
-      <div id="js-lr-time"></div>
-    </div>
+    
+    
     <script type="text/javascript" src="./lib/kmeans.js"></script>
     <script type="text/javascript" src="./bundle.js"></script>
   </body>

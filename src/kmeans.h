@@ -5,6 +5,7 @@
 
 #define VECTOR_LENGTH 2
 #define MAX_ITER 10
+#define TOLERANCE 0.0001
 
 void initialize_centers(int k, double* data, int length, double* centers) {
     for (int i = 0; i < k; i++) {
@@ -81,7 +82,7 @@ void kmeans(int k, double* data, int length, double* centers, int* labels) {
             labels[point] = newLabel;
         }
 
-        if (changedPoints / length < 0.01) {
+        if (changedPoints / length < TOLERANCE) {
             break;
         }
 
