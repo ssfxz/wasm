@@ -23,5 +23,5 @@ export const scatter = {
     },
 }
 
-export const SCHEME = ['#5685f6', '#73cbe6', '#489e8e', '#82c882']
+export const SCHEME = [ '#5685f6', '#73cbe6', '#489e8e', '#82c882', '#f0d060', '#e09db7', '#7b51b3', '#8b9cd6' ]
 export const CENTER_COLOR = '#f5222d'
