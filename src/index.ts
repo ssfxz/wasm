@@ -1,7 +1,8 @@
 import Bytecharts from '@dp/bytecharts'
 import { kmeans_wasm, kmeans_js } from './kmeans'
-import { scatter, SCHEME, CENTER_COLOR } from './constant'
+import { scatter, SCHEME, CENTER_COLOR, dualConfig } from './constant'
 import { datasource } from './datasource'
+import {lr_wasm, lr_js, test, random_lr_data} from './linearRegressor'
 
 let K = 4
 // const datasource = [
@@ -104,7 +105,6 @@ function start(){
 {
     start()
 
-    // 绑定事件
     const addDom = document.getElementById('btn-add')
     if (addDom) {
         addDom.onclick = () => {
@@ -129,4 +129,55 @@ function start(){
             start()
         }
     }
+}
+
+
+function renderLR(type){
+    const dataSource = random_lr_data(1000000, 1, 2)
+    const x = dataSource[0].slice(0,300)
+    const y = dataSource[1].slice(0,300)
+    const values = x.map((v,i) => ({x: v, y: y[i], color: 'color1'}))
+    let result = {a:0, b: 0}
+    const timestamp_start = new Date().getTime()
+    if(type === 'wasm'){
+        result = lr_wasm(dataSource)
+    }else if(type === 'js') {
+        result = lr_js(dataSource)
+    }
+    const timestamp_end = new Date().getTime()
+    const dom = document.getElementById(`${type}-lr-time`)
+    if(dom){
+        dom.innerHTML = `with ${type}:<span>${timestamp_end - timestamp_start}</span>ms`;
+    }
+    const a = result.a
+    const b = result.b
+    console.log("斜率", a, "截距", b)
+    const point1 = [-1, -1 * a + b]
+    const point2 = [1, 1*a + b]
+    const spec = {
+        ...dualConfig,
+        data: [{
+            name: '双轴图',
+            values: type === 'source'? values:  values.concat([{
+                x: point1[0],
+                y1: point1[1],
+                color: 'color2',
+            }, {
+                x: point2[0],
+                y1: point2[1],
+                color: 'color2',
+            }])
+        }],
+       
+    }
+    const bytecharts = new Bytecharts(`${type}-lr`, spec)
+    console.log(spec)
+    bytecharts.setColors(['#5685f6', '#f5222d'])
+    bytecharts.renderAsync()
+}
+
+{
+    renderLR("source")
+    renderLR("wasm")
+    renderLR("js",)
 }
