@@ -36,7 +36,7 @@ function renderWasmKmeans() {
     const { centers, labels } = result
 
     const timestamp_end = new Date().getTime()
-    console.log('K-Means with WASM: ', timestamp_end - timestamp_start, 'ms')
+    console.log('K-Means with WASM:', timestamp_end - timestamp_start, 'ms')
     const dom = document.getElementById('wasm-kmeans')
     if (dom) {
         dom.innerHTML = `K-Means with WASM: <span>${timestamp_end - timestamp_start}</span> ms`;
@@ -66,7 +66,7 @@ function renderJsKmeans() {
     const { centers, labels } = result
 
     const timestamp_end = new Date().getTime()
-    console.log('K-Means with JS: ', timestamp_end - timestamp_start, 'ms')
+    console.log('K-Means with JS:', timestamp_end - timestamp_start, 'ms')
     const dom = document.getElementById('js-kmeans')
     if (dom) {
         dom.innerHTML = `K-Means with JS: <span>${timestamp_end - timestamp_start}</span> ms`;
