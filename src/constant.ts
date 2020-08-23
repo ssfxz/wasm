@@ -21,6 +21,9 @@ export const scatter = {
     legend: {
         visible: false,
     },
+    tooltip: {
+        visible: false,
+    }
 }
 
 export const SCHEME = [ '#5685f6', '#73cbe6', '#489e8e', '#82c882', '#f0d060', '#e09db7', '#7b51b3', '#8b9cd6' ]

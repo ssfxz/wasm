@@ -5,6 +5,34 @@
     <style>
       .container {
         display: flex;
+        flex-wrap: wrap;
+        width: 1500px;
+      }
+      #wasm-kmeans span{
+        color: #66cc1a;
+      }
+      #js-kmeans span{
+        color: #de0e0e;
+      }
+      .result {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: xx-large;
+        font-weight: bold;
+      }
+      .btn {
+        margin: 4px;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+      }
+      span {
+        margin: 0 12px;
+      }
+      #btn-calc {
+        width: 48px;
       }
     </style>
   </head>
@@ -13,6 +41,14 @@
       <div id="source"></div>
       <div id="wasm"></div>
       <div id="js"></div>
+      <div class="result">
+        <span id="k-value"></span>
+        <button class="btn" id="btn-add">+</button>
+        <button class="btn" id="btn-sub">-</button>
+        <button class="btn" id="btn-calc">GO</button>
+      </div>
+      <div class="result" id="wasm-kmeans"></div>
+      <div class="result" id="js-kmeans"></div>
     </div>
     <script type="text/javascript" src="./lib/kmeans.js"></script>
     <script type="text/javascript" src="./bundle.js"></script>

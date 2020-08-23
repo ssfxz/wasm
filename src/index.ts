@@ -3,7 +3,7 @@ import { kmeans_wasm, kmeans_js } from './kmeans'
 import { scatter, SCHEME, CENTER_COLOR } from './constant'
 import { datasource } from './datasource'
 
-const K = 4
+let K = 4
 // const datasource = [
 //     [0.697, 0.460], [0.774, 0.376], [0.634, 0.264], [0.608, 0.318], [0.556, 0.215],
 //     [0.403, 0.237], [0.481, 0.149], [0.437, 0.211], [0.666, 0.091], [0.243, 0.267],
@@ -28,16 +28,18 @@ const K = 4
     bytecharts.renderAsync()
 }
 
-
-{
+function renderWasmKmeans() {
     const timestamp_start = new Date().getTime()
 
     const result = kmeans_wasm(datasource, K)
     const { centers, labels } = result
 
     const timestamp_end = new Date().getTime()
-    console.log('K-Means with WASM:', timestamp_end - timestamp_start, 'ms')
-    
+    console.log('K-Means with WASM: ', timestamp_end - timestamp_start, 'ms')
+    const dom = document.getElementById('wasm-kmeans')
+    if (dom) {
+        dom.innerHTML = `K-Means with WASM: <span>${timestamp_end - timestamp_start}</span> ms`;
+    }
     const data = datasource.map((d, i) => ({ x: d[0], y: d[1], z: `${labels[i]}` }))
     const centerData = centers.map(d => ({ x: d[0], y:d[1], z: 'center'}))
     const spec = {
@@ -56,15 +58,18 @@ const K = 4
 }
 
 
-{
+function renderJsKmeans(){
     const timestamp_start = new Date().getTime()
 
     const result = kmeans_js(datasource, K)
     const { centers, labels } = result
 
     const timestamp_end = new Date().getTime()
-    console.log('K-Means with JS:', timestamp_end - timestamp_start, 'ms')
-    
+    console.log('K-Means with JS: ', timestamp_end - timestamp_start, 'ms')
+    const dom = document.getElementById('js-kmeans')
+    if (dom) {
+        dom.innerHTML = `K-Means with JS: <span>${timestamp_end - timestamp_start}</span> ms`;
+    }
     const data = datasource.map((d, i) => ({ x: d[0], y: d[1], z: `${labels[i]}` }))
     const centerData = centers.map(d => ({ x: d[0], y:d[1], z: 'center'}))
     const spec = {
@@ -80,4 +85,48 @@ const K = 4
     const bytecharts = new Bytecharts('js', spec)
     bytecharts.setColors([...SCHEME.slice(0, K), CENTER_COLOR])
     bytecharts.renderAsync()
+}
+
+function renderKValue() {
+    const dom = document.getElementById('k-value')
+    console.log('K = ', K)
+    if(dom) {
+        dom.innerHTML = `K =<span>${K}</span> `;
+    }
+}
+
+function start(){
+    renderKValue()
+    renderWasmKmeans();
+    renderJsKmeans();
+}
+
+{
+    start()
+
+    // 绑定事件
+    const addDom = document.getElementById('btn-add')
+    if (addDom) {
+        addDom.onclick = () => {
+            if (K < 8) {
+                K += 1
+                start()
+            }
+        }
+    }
+    const subDom = document.getElementById('btn-sub')
+    if (subDom) {
+        subDom.onclick = () => {
+            if (K > 1) {
+                K -= 1
+                start()
+            }
+        }
+    }
+    const calcDom = document.getElementById('btn-calc')
+    if (calcDom) {
+        calcDom.onclick = () => {
+            start()
+        }
+    }
 }
