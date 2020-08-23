@@ -6,13 +6,30 @@
       .container {
         display: flex;
       }
+      #wasm-kmeans span{
+        color: #66cc1a;
+      }
+      #js-kmeans span{
+        color: #de0e0e;
+      }
+
+      .result span{
+        font-size: larger;
+      }
     </style>
   </head>
   <body>
+    <div class="header">
+      K:<input id='k-input' placeholder="请输入K值"/>
+    </div>
     <div class="container">
       <div id="source"></div>
       <div id="wasm"></div>
       <div id="js"></div>
+    </div>
+    <div class="result">
+      <div id="wasm-kmeans"></div>
+      <div id="js-kmeans"></div>
     </div>
     <script type="text/javascript" src="./lib/kmeans.js"></script>
     <script type="text/javascript" src="./bundle.js"></script>

@@ -2,8 +2,9 @@ import Bytecharts from '@dp/bytecharts'
 import { kmeans_wasm, kmeans_js } from './kmeans'
 import { scatter, SCHEME, CENTER_COLOR } from './constant'
 import { datasource } from './datasource'
+import {lr_wasm, lr_js, test} from './linearRegressor'
 
-const K = 4
+let K = 4
 // const datasource = [
 //     [0.697, 0.460], [0.774, 0.376], [0.634, 0.264], [0.608, 0.318], [0.556, 0.215],
 //     [0.403, 0.237], [0.481, 0.149], [0.437, 0.211], [0.666, 0.091], [0.243, 0.267],
@@ -28,8 +29,7 @@ const K = 4
     bytecharts.renderAsync()
 }
 
-
-{
+function renderWasmKmeans() {
     const timestamp_start = new Date().getTime()
 
     const result = kmeans_wasm(datasource, K)
@@ -37,7 +37,10 @@ const K = 4
 
     const timestamp_end = new Date().getTime()
     console.log('K-Means with WASM:', timestamp_end - timestamp_start, 'ms')
-    
+    const dom = document.getElementById("wasm-kmeans")
+    if(dom){
+        dom.innerHTML = `<h1>K-Means with WASM:<span>${timestamp_end - timestamp_start}</span>ms</h1>`;
+    }
     const data = datasource.map((d, i) => ({ x: d[0], y: d[1], z: `${labels[i]}` }))
     const centerData = centers.map(d => ({ x: d[0], y:d[1], z: 'center'}))
     const spec = {
@@ -56,7 +59,7 @@ const K = 4
 }
 
 
-{
+function renderJsKmeans(){
     const timestamp_start = new Date().getTime()
 
     const result = kmeans_js(datasource, K)
@@ -64,7 +67,10 @@ const K = 4
 
     const timestamp_end = new Date().getTime()
     console.log('K-Means with JS:', timestamp_end - timestamp_start, 'ms')
-    
+    const dom = document.getElementById("js-kmeans")
+    if(dom){
+        dom.innerHTML = `<h1>K-Means with JS:<span>${timestamp_end - timestamp_start}</span>ms</h1>`;
+    }
     const data = datasource.map((d, i) => ({ x: d[0], y: d[1], z: `${labels[i]}` }))
     const centerData = centers.map(d => ({ x: d[0], y:d[1], z: 'center'}))
     const spec = {
@@ -81,3 +87,29 @@ const K = 4
     bytecharts.setColors([...SCHEME.slice(0, K), CENTER_COLOR])
     bytecharts.renderAsync()
 }
+
+function start(){
+    renderWasmKmeans();
+    renderJsKmeans();
+}
+
+{
+    start()
+
+    // 绑定事件
+    const inputDom = document.getElementById('k-input')
+    inputDom?.addEventListener('keyup', (e: any) => {
+       if(e.keyCode === 13){
+           const nextK = parseInt(e.target.value)
+           K = nextK
+           start()
+       }
+    })
+}
+
+
+
+{
+    test()
+}
+

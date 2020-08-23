@@ -92,3 +92,9 @@ void kmeans(int k, double* data, int length, double* centers, int* labels) {
 void kmeans_from_js(int k, double* jsdata, int length, double* centers, int* labels) {
     kmeans(k, jsdata, length / VECTOR_LENGTH, centers, labels);
 }
+
+void add_array(double* param1, double* param2, double* result, int len){
+    for (int i=0; i<len; i++){
+        result[i] = param1[i] + param2[i];
+    }
+}
