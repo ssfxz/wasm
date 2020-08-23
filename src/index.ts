@@ -90,7 +90,7 @@ function renderJsKmeans(){
 
 function renderKValue() {
     const dom = document.getElementById('k-value')
-    console.log('K = ', K)
+    console.log('K =', K)
     if(dom) {
         dom.innerHTML = `K =<span>${K}</span> `;
     }
