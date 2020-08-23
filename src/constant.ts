@@ -25,3 +25,44 @@ export const scatter = {
 
 export const SCHEME = ['#5685f6', '#73cbe6', '#489e8e', '#82c882']
 export const CENTER_COLOR = '#f5222d'
+
+
+//双轴图 散点+折线
+export const dualConfig =  {
+	"type": "dualIndicator",
+	"layout": "dualAxis",
+    "quantitative": true,
+	"xField": "x",
+	"y0": {
+		"type": "scatter",
+		"yField": "y"
+	},
+	"y1": {
+		"type": "line",
+		"yField": "y1",
+        "point": false
+	},
+	"axes": [{
+		"orient": "left",
+		"range": {
+			"min": 1,
+			"max": 3
+		}
+	}, {
+        "orient": "right",
+        ticks: false,
+        "grid": false,
+		"range": {
+			"min": 1,
+			"max": 3
+		}
+	}, {
+		"orient": "bottom",
+		"range": {
+			"min": -1,
+			"max": 1
+		}
+    }],
+    color: 'color',
+    groupBy: 'color',
+}

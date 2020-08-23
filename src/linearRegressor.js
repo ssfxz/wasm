@@ -41,12 +41,15 @@ export function lr_wasm(dataSource){
      // 截距
      const _b = Module._malloc(Float64Array.BYTES_PER_ELEMENT)
  
+    const timestamp_start = new Date().getTime()
+
      Module._linearFitting(_trainX, _trainY, len, _a, _b)
- 
+     const timestamp_end = new Date().getTime()
+    console.log("1111", timestamp_end - timestamp_start)
      const a = Module.HEAPF64.subarray(_a / Float64Array.BYTES_PER_ELEMENT, _a / Float64Array.BYTES_PER_ELEMENT + 1)
      const b = Module.HEAPF64.subarray(_b / Float64Array.BYTES_PER_ELEMENT, _b / Float64Array.BYTES_PER_ELEMENT + 1)
 
-     return {a, b};
+     return {a: a[0], b: b[0]};
 }
 
 function linearFitting(arrayX, arrayY, len)
@@ -63,7 +66,8 @@ function linearFitting(arrayX, arrayY, len)
 		 x2sum += x*x;
 	}
 	const pRetFactor=(sum_x*sum_y/len-xySum)/(sum_x*sum_x/len-x2sum);
-    const pRetConstant=(sum_y-(pRetFactor)*sum_x)/len;
+    const pRetConstant=(sum_y-pRetFactor*sum_x)/len;
+
     return {a: pRetFactor, b: pRetConstant};
 }
 
@@ -73,12 +77,15 @@ export function lr_js(dataSource) {
     const trainY = dataSource[1]
     const len = trainX.length
       
-    return linearFitting(trainY, trainY, len)
+    return linearFitting(trainX, trainY, len)
 }
 
-export function random_lr_data(size){
+export function random_lr_data(size, a, b){
     const x = new Array(size)
+    const y = new Array(size)
     for(let i=0; i<size; i++) {
-        x[i] = Math.random() 
+        x[i] = Math.random()*2 - 1 // [-1, 1] 
+        y[i] = x[i] * a + b + (Math.random()*2 - 1)*0.2
     }
+    return [x, y];
 }
