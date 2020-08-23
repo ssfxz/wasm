@@ -1,8 +1,8 @@
 import Bytecharts from '@dp/bytecharts'
 import { kmeans_wasm, kmeans_js } from './kmeans'
-import { scatter, SCHEME, CENTER_COLOR, dualConfig } from './constant'
+import { SCHEME, CENTER_COLOR, scatter, dualConfig } from './constant'
 import { datasource } from './datasource'
-import {lr_wasm, lr_js, test, random_lr_data} from './linearRegressor'
+import { lr_wasm, lr_js, test, random_lr_data } from './linearRegressor'
 
 let K = 4
 // const datasource = [
@@ -59,7 +59,7 @@ function renderWasmKmeans() {
 }
 
 
-function renderJsKmeans(){
+function renderJsKmeans() {
     const timestamp_start = new Date().getTime()
 
     const result = kmeans_js(datasource, K)
@@ -96,7 +96,7 @@ function renderKValue() {
     }
 }
 
-function start(){
+function start() {
     renderKValue()
     renderWasmKmeans();
     renderJsKmeans();
@@ -132,7 +132,7 @@ function start(){
 }
 
 
-function renderLR(type){
+function renderLR(type) {
     const dataSource = random_lr_data(1000000, 1, 2)
     const x = dataSource[0].slice(0,300)
     const y = dataSource[1].slice(0,300)
@@ -171,7 +171,6 @@ function renderLR(type){
        
     }
     const bytecharts = new Bytecharts(`${type}-lr`, spec)
-    console.log(spec)
     bytecharts.setColors(['#5685f6', '#f5222d'])
     bytecharts.renderAsync()
 }
