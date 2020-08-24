@@ -14,7 +14,7 @@ let K = 4
 //     [0.751, 0.489], [0.532, 0.472], [0.473, 0.376], [0.725, 0.445], [0.446, 0.459],
 // ]
 
-{
+function renderKmeans() {
     const spec = {
         ...scatter,
         data: [{
@@ -92,42 +92,7 @@ function renderKValue() {
     const dom = document.getElementById('k-value')
     console.log('K =', K)
     if(dom) {
-        dom.innerHTML = `K =<span>${K}</span> `;
-    }
-}
-
-function start() {
-    renderKValue()
-    renderWasmKmeans();
-    renderJsKmeans();
-}
-
-{
-    start()
-
-    const addDom = document.getElementById('btn-add')
-    if (addDom) {
-        addDom.onclick = () => {
-            if (K < 8) {
-                K += 1
-                start()
-            }
-        }
-    }
-    const subDom = document.getElementById('btn-sub')
-    if (subDom) {
-        subDom.onclick = () => {
-            if (K > 1) {
-                K -= 1
-                start()
-            }
-        }
-    }
-    const calcDom = document.getElementById('btn-calc')
-    if (calcDom) {
-        calcDom.onclick = () => {
-            start()
-        }
+        dom.innerHTML = `K =<span>${K}</span> `
     }
 }
 
@@ -175,8 +140,48 @@ function renderLR(type) {
     bytecharts.renderAsync()
 }
 
-{
+
+function start() {
+    renderKValue()
+    renderWasmKmeans()
+    renderJsKmeans()
+
     renderLR("source")
     renderLR("wasm")
     renderLR("js",)
 }
+
+
+function init() {
+    renderKmeans()
+
+    const addDom = document.getElementById('btn-add')
+    if (addDom) {
+        addDom.onclick = () => {
+            if (K < 8) {
+                K += 1
+                start()
+            }
+        }
+    }
+    const subDom = document.getElementById('btn-sub')
+    if (subDom) {
+        subDom.onclick = () => {
+            if (K > 1) {
+                K -= 1
+                start()
+            }
+        }
+    }
+    const calcDom = document.getElementById('btn-calc')
+    if (calcDom) {
+        calcDom.onclick = () => {
+            start()
+        }
+    }
+
+    start()
+}
+
+
+setTimeout(init, 200)
