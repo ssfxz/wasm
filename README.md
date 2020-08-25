@@ -11,14 +11,14 @@ Install node modules
 npm install
 ```
 
-Build c to webassembly
-```
-npm run wasm 
-```
-
 run the demo on browser
 ```
 npm run dev
+```
+
+Build c to webassembly
+```
+npm run wasm 
 ```
 
 package staff
