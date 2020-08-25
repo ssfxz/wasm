@@ -17,10 +17,6 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         loader: "ts-loader",
       },
-      {
-        test: /\.wasm$/,
-        loaders: ['wasm-loader'],
-      },
     ],
   },
   plugins: [

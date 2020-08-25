@@ -1,4 +1,6 @@
-# wasm-demo
+# WASM K-Means
+
+![](./public/picture.png)
 
 ## Usage
 
